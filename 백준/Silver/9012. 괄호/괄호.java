@@ -1,41 +1,44 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Stack;
-
+import java.util.*;
 public class Main {
-
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	
+	public static void main(String[] args) throws IOException{	
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		int T = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
 		
-		for(int i=0; i<T; i++) {
-			Stack<Character> stack = new Stack<>();
-			char[] arr = br.readLine().toCharArray();
-			for(int j=0; j<arr.length; j++) {
+		int N = Integer.parseInt(st.nextToken());
+		
+		Stack<Character> stack; 
+		char[] arr;
+		for(int i=0; i<N; i++) {
+			stack = new Stack<>();
+			st = new StringTokenizer(br.readLine());
+			arr = st.nextToken().toCharArray();
+			int j;
+			for(j=0; j<arr.length; j++) {
 				if(arr[j] == '(') {
-					stack.add(arr[j]);
+					stack.add('(');
 				}else {
-					if(stack.isEmpty() || stack.peek() == ')') {
-						bw.append("NO\n");
+					if(stack.isEmpty()) {
+						sb.append("NO\n");
 						break;
 					}else {
 						stack.pop();
 					}
 				}
-				if(j == arr.length-1 && stack.isEmpty()) {
-					bw.append("YES\n");
+			}
+			if(j == arr.length) {
+				if(stack.isEmpty()) {
+					sb.append("YES\n");
+				}else {
+					sb.append("NO\n");
 				}
 			}
-			if(!stack.isEmpty()) {
-				bw.append("NO\n");
-			}
-			
 		}
-		bw.flush();
+		System.out.println(sb);
+		
 	}
-
 }
