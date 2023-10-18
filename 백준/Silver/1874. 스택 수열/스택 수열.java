@@ -1,50 +1,44 @@
-import java.util.Scanner;
-import java.util.Stack;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 public class Main {
-
-	public static void main(String[] args){
-		// 1 2 5 7 8
-		// 4 3 6 8 7 5 2 1
+	
+	public static void main(String[] args) throws IOException{	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
-		int[] A = new int[N];
-		for(int i=0; i<N; i++) {
-			A[i] = sc.nextInt();
-		}
+		int N = Integer.parseInt(br.readLine());
 		
 		Stack<Integer> stack = new Stack<>();
 		
-		StringBuffer bf = new StringBuffer();
-		
-		int num = 1;
-		boolean result = true;
-		
-		for(int i=0; i<A.length; i++) {
-			int su = A[i];
-			if(su >= num) {
-				while(su >= num) {
-					stack.push(num++);
-					bf.append("+\n");					
-				}
-				stack.pop();
-				bf.append("-\n");
-			}else {
-				int n = stack.pop();
-				
-				if(n > su) {
-					System.out.println("NO");
-					result = false;
-					break;
-				}else {
-					bf.append("-\n");
+		int now = 1;
+		stack.add(now);
+		sb.append("+\n");
+		for(int i=0; i<N; i++) {
+			int target = Integer.parseInt(br.readLine());
+			if(stack.isEmpty()) {
+				stack.add(++now);
+				sb.append("+\n");
+			}
+			if(stack.peek() < target) {
+				while(stack.peek() != target) {
+					stack.add(++now);
+					sb.append("+\n");
 				}
 			}
+			if(stack.peek() > target) {
+				System.out.println("NO");
+				break;
+			}
+			if(stack.peek() == target){
+				stack.pop();
+				sb.append("-\n");
+			}
 		}
-		if(result) {
-			System.out.println(bf.toString());
+		if(stack.isEmpty()) {
+			System.out.println(sb);
 		}
+		
 	}
-
 }
