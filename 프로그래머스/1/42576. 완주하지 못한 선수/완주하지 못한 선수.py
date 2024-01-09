@@ -1,0 +1,18 @@
+'''
+리스트에 넣고 정렬한후 반복돌면서 확인하고 pop
+'''
+def solution(participant, completion):
+    dic = {}
+    
+    for p in participant:
+        if p in dic:
+            dic[p] += 1
+        else:
+            dic[p] = 1
+    
+    for c in completion:
+        dic[c] -= 1
+        
+    for key in dic.keys():
+        if dic[key] > 0:
+            return key
